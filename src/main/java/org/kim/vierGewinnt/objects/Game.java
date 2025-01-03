@@ -14,6 +14,7 @@ import org.kim.vierGewinnt.commands.VierGewinntCommand;
 import org.kim.vierGewinnt.listeners.VierGewinntGUI;
 import org.kim.vierGewinnt.services.GameService;
 import org.kim.vierGewinnt.utils.InventoryBuilder;
+import org.kim.vierGewinnt.utils.Messages;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +39,8 @@ public class Game {
     }
 
     public void start() {
-        Inventory inventory = new InventoryBuilder("<gradient:#8267FF:#EF6A6A>Vier-Gewinnt | Turn: " + Bukkit.getPlayer(turn).getName() + " </gradient>", 6 * 9, 3)
-                .aItem(53, Material.BLACK_WOOL, Component.text("§cAufgeben"), null)
+        Inventory inventory = new InventoryBuilder("<gradient:#62D660:#09A9B7>Vier-Gewinnt <color:gray>| <color:#09A9B7>Turn: " + Bukkit.getPlayer(turn).getName() + " </gradient>", 6 * 9, 3)
+                .aItem(53, Material.BLACK_WOOL, Component.text("§cAufgeben (Looser)"), null)
                 .build();
         for (int i = 0; i < inventory.getSize(); i++) {
             if (inventory.getItem(i) == null) {
@@ -57,7 +58,7 @@ public class Game {
         } else {
             setTurn(starter.getUniqueId());
         }
-        Inventory newInventory = new InventoryBuilder("<gradient:#8267FF:#EF6A6A>Vier-Gewinnt | Turn: " + Bukkit.getPlayer(turn).getName() + " </gradient>", 6 * 9, 3).build();
+        Inventory newInventory = new InventoryBuilder("<gradient:#62D660:#09A9B7>Vier-Gewinnt <color:gray>| <color:#09A9B7>Turn: " + Bukkit.getPlayer(turn).getName() + " </gradient>", 6 * 9, 3).build();
         newInventory.setContents(gameInventory.getContents());
         this.gameInventory = newInventory;
         starter.openInventory(newInventory);
@@ -68,15 +69,15 @@ public class Game {
     }
 
     public void winGame(Player p) {
-        p.sendMessage(VierGewinntGUI.WINMESSAGE);
+        p.sendMessage(Messages.GAME_WON.getMessage());
         Player otherr = starter.equals(p) ? other : starter;
-        otherr.sendMessage(VierGewinntGUI.LOSEMESSAGE);
+        otherr.sendMessage(Messages.GAME_LOOSE.getMessage());
         gameHashMap.remove(starter.getUniqueId());
         gameHashMap.remove(other.getUniqueId());
         uniqueGameHashMap.remove(starter.getUniqueId());
         for(Player spectator : list) {
             GameService.spectateVierGewinntHashMap.remove(spectator.getUniqueId());
-            spectator.sendMessage(VierGewinntCommand.PREFIX.append(MiniMessage.miniMessage().deserialize("<color:#77ff73> " + p.getName()+ " hat gewonnen! </color>")));
+            spectator.sendMessage(Messages.PREFIX.getMessage().append(Messages.mm("<color:#62D660> " + p.getName()+ " hat gewonnen! </color>")));
         }
         list.clear();
     }

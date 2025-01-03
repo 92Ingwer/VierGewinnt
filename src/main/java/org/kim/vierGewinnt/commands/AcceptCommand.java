@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.kim.vierGewinnt.objects.Game;
 import org.kim.vierGewinnt.services.GameService;
+import org.kim.vierGewinnt.utils.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,6 @@ import java.util.UUID;
  * This command allows a player to accept a game request from another player.
  */
 public class AcceptCommand implements CommandExecutor {
-    static final Component USAGE = Component.text("§cUsage: Verwende /accept <Spieler>");
-    static final Component REQUESTNOTFOUND = Component.text("§cAnfrage nicht gefunden");
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
@@ -29,19 +28,19 @@ public class AcceptCommand implements CommandExecutor {
         }
 
         if (strings.length != 1) {
-            p.sendMessage(USAGE);
+            p.sendMessage(Messages.ACCEPT_CMD_USAGE.getMessage());
             return false;
         }
         // Get the target player
         Player t = Bukkit.getPlayer(strings[0]);
         if (t == null) {
-            p.sendMessage(REQUESTNOTFOUND);
+            p.sendMessage(Messages.REQUEST_NOT_FOUND.getMessage());
             return false;
         }
         UUID targetUUID = t.getUniqueId();
         // Check if there is a pending request from the target player
         if (GameService.requestHashMap.get(targetUUID) != p.getUniqueId()) {
-            p.sendMessage(REQUESTNOTFOUND);
+            p.sendMessage(Messages.REQUEST_NOT_FOUND.getMessage());
             return false;
         }
         // Remove the request from the hashmap

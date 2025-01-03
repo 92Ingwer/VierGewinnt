@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,6 +16,7 @@ import org.kim.vierGewinnt.VierGewinnt;
 import org.kim.vierGewinnt.commands.VierGewinntCommand;
 import org.kim.vierGewinnt.objects.Game;
 import org.kim.vierGewinnt.services.GameService;
+import org.kim.vierGewinnt.utils.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +27,6 @@ import java.util.UUID;
  */
 public class VierGewinntGUI implements Listener {
     // Message displayed when a player wins
-    public static final Component WINMESSAGE = VierGewinntCommand.PREFIX.append(MiniMessage.miniMessage().deserialize("<color:#77ff73> Du hast gewonnen! </color>"));
-    // Message displayed when a player loses
-    public static final Component LOSEMESSAGE = VierGewinntCommand.PREFIX.append(MiniMessage.miniMessage().deserialize("<color:#ff4d4d> Du hast verloren! </color>"));
     // List to store the winning slots
     static final List<Integer> list = new ArrayList<>();
 
@@ -80,6 +79,8 @@ public class VierGewinntGUI implements Listener {
             }
             if (isFreeSlot(slot, inventory)) {
                 inventory.setItem(slot, new ItemStack(material));
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_HAT, 1, 1);
+                t.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_SNARE, 1,1);
                 if (hasPlayerWon(slot, inventory, material)) {
                     for (int i : list) {
                         inventory.setItem(i, new ItemStack(Material.GREEN_STAINED_GLASS_PANE));
@@ -100,13 +101,13 @@ public class VierGewinntGUI implements Listener {
                     return;
                 }
                 if (isDrawn(inventory)) {
-                    p.sendMessage(VierGewinntCommand.PREFIX.append(MiniMessage.miniMessage().deserialize("<color:#ff4d4d> Unentschieden! </color>")));
-                    t.sendMessage(VierGewinntCommand.PREFIX.append(MiniMessage.miniMessage().deserialize("<color:#ff4d4d> Unentschieden! </color>")));
+                    p.sendMessage(Messages.GAME_TIE.getMessage());
+                    t.sendMessage(Messages.GAME_TIE.getMessage());
                     Game.gameHashMap.remove(game.getStarter().getUniqueId());
                     Game.gameHashMap.remove(game.getOther().getUniqueId());
                     for (Player spectator : game.getList()) {
                         GameService.spectateVierGewinntHashMap.remove(spectator.getUniqueId());
-                        spectator.sendMessage(VierGewinntCommand.PREFIX.append(MiniMessage.miniMessage().deserialize("<color:#ff4d4d> Unentschieden! </color>")));
+                        spectator.sendMessage(Messages.GAME_TIE.getMessage());
                     }
                     game.getList().clear();
                     return;

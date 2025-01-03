@@ -8,7 +8,7 @@ import org.kim.vierGewinnt.commands.VierGewinntCommand;
 import org.kim.vierGewinnt.listeners.CloseInventoryListener;
 import org.kim.vierGewinnt.listeners.VierGewinntGUI;
 
-public final class VierGewinnt extends JavaPlugin {
+public final class  VierGewinnt extends JavaPlugin {
     @Getter
     public static VierGewinnt instance;
 
