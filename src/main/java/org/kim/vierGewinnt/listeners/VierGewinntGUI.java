@@ -73,7 +73,11 @@ public class VierGewinntGUI implements Listener {
                 t.closeInventory();
                 return;
             }
-            Material material = game.getStarter().equals(p) ? Material.BLUE_CONCRETE : Material.RED_CONCRETE;
+            // Get the materials for the players
+            Material starterMaterial = VierGewinnt.getInstance().getMaterialManager().getStarterMaterial();
+            Material otherMaterial = VierGewinnt.getInstance().getMaterialManager().getOtherMaterial();
+            // Get the material for the current player
+            Material material = game.getStarter().equals(p) ? starterMaterial : otherMaterial;
             if (!game.getTurn().equals(uuid)) {
                 return;
             }

@@ -1,0 +1,5 @@
+settings:
+  #The material of the block of the starter: e.g. "STONE" "GRASS_BLOCK" "DIRT" "OAK_LOG"
+  startermaterial: BLUE_CONCRETE
+  #The material of the block of the other: e.g. "STONE" "GRASS_BLOCK" "DIRT" "OAK_LOG"
+  othermaterial: RED_CONCRETE
