@@ -13,6 +13,9 @@ public class CloseInventoryListener implements Listener {
 
     @EventHandler
     public void onCloseInventory(InventoryCloseEvent e) {
+        if(e.getReason() == InventoryCloseEvent.Reason.PLUGIN) {
+            return;
+        }
         Player p = (Player) e.getPlayer();
         Game game = Game.gameHashMap.get(p.getUniqueId());
         if (game != null && e.getInventory().equals(game.getGameInventory())) {
@@ -23,6 +26,7 @@ public class CloseInventoryListener implements Listener {
                     specatedPlayer.closeInventory();
                 }
             } catch (Exception ignored) {
+
             }
             game.winGame(game.getStarter().equals(p) ? game.getOther() : game.getStarter());
         }

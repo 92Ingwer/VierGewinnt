@@ -46,7 +46,7 @@ public class VierGewinntCommand implements CommandExecutor {
                 return false;
             }
             for(Game game : Game.uniqueGameHashMap.values()) {
-                p.sendMessage(Messages.PREFIX.getMessage().append(Messages.mm("<color:#00C9DB>" + game.getStarter().getName() + " <color:gray>vs <color:#00C9DB>" + game.getOther().getName() + " <color:gray> | <color:##D78C00>[Spectate] </color>").clickEvent(ClickEvent.runCommand("/viergewinnt spectate " + game.getStarter().getName()))));
+                p.sendMessage(Messages.PREFIX.getMessage().append(Messages.mm("<color:#00C9DB>" + game.getStarter().getName() + " <color:gray>vs <color:#00C9DB>" + game.getOther().getName() + " <color:gray> | <color:#D78C00>[Spectate] </color>").clickEvent(ClickEvent.runCommand("/viergewinnt spectate " + game.getStarter().getName()))));
             }
             return false;
         }
