@@ -6,12 +6,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.kim.vierGewinnt.commands.VierGewinntCommand;
-import org.kim.vierGewinnt.listeners.VierGewinntGUI;
 import org.kim.vierGewinnt.services.GameService;
 import org.kim.vierGewinnt.utils.InventoryBuilder;
 import org.kim.vierGewinnt.utils.Messages;
@@ -40,7 +37,7 @@ public class Game {
 
     public void start() {
         Inventory inventory = new InventoryBuilder("<gradient:#62D660:#09A9B7>Vier-Gewinnt <color:gray>| <color:#09A9B7>Turn: " + Bukkit.getPlayer(turn).getName() + " </gradient>", 6 * 9, 3)
-                .aItem(53, Material.BLACK_WOOL, Component.text("§cAufgeben (Looser)"), null)
+                .aItem(53, Material.BLACK_WOOL, Component.text("§cAufgeben"), null)
                 .build();
         for (int i = 0; i < inventory.getSize(); i++) {
             if (inventory.getItem(i) == null) {
